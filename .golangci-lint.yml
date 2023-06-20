@@ -1,0 +1,462 @@
+---
+# Source: pangoptic/templates/golangci-base.yml.tpl
+# Options for analysis running.
+run:
+  # Settable parameters #
+  timeout: 5m
+  tests: true
+  build-tags: []
+  # Which dirs to skip: issues from them won't be reported.
+  skip-dirs:
+    - "bin"
+    - "scripts"
+    - ".ci"
+    - ".gradle"
+  # Which files to skip: they will be analyzed, but issues from them won't be reported.
+  skip-files: []
+
+  # Invariable parameters #
+
+  # Exit code when at least one issue was found.
+  issues-exit-code: 1
+  # Enables skipping of directories:
+  # - vendor$, third_party$, testdata$, examples$, Godeps$, builtin$
+  skip-dirs-use-default: false
+  # If set we pass it to "go list -mod={option}". From "go help modules":
+  # If invoked with -mod=readonly, the go command is disallowed from the implicit
+  # automatic updating of go.mod described above. Instead, it fails when any changes
+  # to go.mod are needed. This setting is most useful to check that go.mod does
+  # not need updates, such as in a continuous integration and testing system.
+  modules-download-mode: readonly
+  # Allow multiple parallel golangci-lint instances running.
+  # If false (default) - golangci-lint acquires file lock on start.
+  allow-parallel-runners: false
+
+  # Disabled parameters  #
+
+  # The default concurrency value is the number of available CPU.
+  # concurrency:
+
+  # Define the Go version limit.
+  # Mainly related to generics support since go1.18.
+  # Default: use Go version from the go.mod file, fallback on the env var `GOVERSION`, fallback on 1.18
+  # go:
+
+
+# Output configuration options
+output:
+  format: json
+  # Print lines of code with issue.
+  print-issued-lines: true
+  # Print linter name in the end of issue text.
+  print-linter-name: true
+  # Make issues output unique by line.
+  uniq-by-line: true
+  # Add a prefix to the output file references.
+  path-prefix: ""
+  # Sort results by: filepath, line and column.
+  sort-results: true
+
+# Linters settings configuration
+linters-settings:
+
+  asasalint: 
+    ignore-test: false
+
+  dupl: 
+    threshold: 100
+
+  dupword: 
+    keywords: []
+
+  errcheck: 
+    check-blank: false
+    check-type-assertions: true
+    disable-default-exclusions: false
+    exclude-functions: null
+
+  errorlint: 
+    asserts: true
+    comparison: true
+    errorf: true
+    errorf-multi: true
+
+  exhaustive: 
+    check:
+    - switch
+    - map
+    check-generated: false
+    default-signifies-exhaustive: true
+    explicit-exhaustive-map: false
+    explicit-exhaustive-switch: false
+    ignore-enum-members: ""
+    ignore-enum-types: ""
+    package-scope-only: false
+
+  goconst: 
+    ignore-calls: false
+    ignore-tests: false
+    match-constant: true
+    min-len: 1
+    min-occurrences: 2
+    numbers: false
+
+  gocritic: 
+    enabled-checks:
+    - appendAssign
+    - appendCombine
+    - argOrder
+    - assignOp
+    - badCall
+    - badCond
+    - captLocal
+    - caseOrder
+    - commentFormatting
+    - defaultCaseOrder
+    - deprecatedComment
+    - dupArg
+    - dupBranchBody
+    - dupCase
+    - dupSubExpr
+    - elseif
+    - exitAfterDefer
+    - flagDeref
+    - flagName
+    - ifElseChain
+    - indexAlloc
+    - mapKey
+    - newDeref
+    - offBy1
+    - rangeExprCopy
+    - rangeValCopy
+    - regexpMust
+    - singleCaseSwitch
+    - sloppyLen
+    - stringXbytes
+    - switchTrue
+    - typeSwitchVar
+    - underef
+    - unlambda
+    - unslice
+    - valSwap
+    - wrapperFunc
+
+  godot: 
+    capital: true
+    exclude: []
+    period: true
+    scope: toplevel
+
+  gofmt: 
+    simplify: false
+
+  goimports: 
+    local-prefixes: github.com/org/project
+
+  gomnd: 
+    checks:
+    - argument
+    - case
+    - condition
+    - operation
+    - return
+    - assign
+    ignored-files: []
+    ignored-functions: []
+    ignored-numbers: []
+
+  gosec: 
+    includes:
+    - G104
+    - G109
+    - G110
+    - G201
+    - G202
+    - G203
+    - G301
+    - G302
+    - G303
+    - G305
+    - G306
+    - G307
+    - G402
+    - G403
+
+  gosimple: 
+    checks:
+    - '*'
+    - -SA1014
+    - -SA1028
+
+  govet: 
+    disable:
+    - shadow
+    enable-all: true
+
+  grouper: 
+    const-require-grouping: false
+    const-require-single-const: false
+    import-require-grouping: false
+    import-require-single-import: true
+    type-require-grouping: false
+    type-require-single-type: false
+    var-require-grouping: false
+    var-require-single-var: false
+
+  lll: 
+    line-length: 120
+    tab-width: 1
+
+  makezero: 
+    always: false
+
+  nilnil: 
+    checked-types:
+    - ptr
+    - func
+    - iface
+    - map
+    - chan
+
+  nolintlint: 
+    allow-no-explanation: []
+    allow-unused: false
+    require-explanation: true
+    require-specific: false
+
+  prealloc: 
+    for-loops: false
+    range-loops: true
+    simple: true
+
+  predeclared: 
+    ignore: ""
+    q: false
+
+  reassign: 
+    patterns:
+    - .*
+
+  revive: 
+    confidence: 0.8
+    enable-all-rules: false
+    ignore-generated-header: true
+    rules:
+    - name: atomic
+    - arguments:
+      - allowTypesBefore: '*testing.T'
+      name: context-as-argument
+    - name: context-keys-type
+    - arguments:
+      - - recover
+        - return
+      name: defer
+    - name: dot-imports
+    - name: identical-branches
+    - name: increment-decrement
+    - name: range-val-in-closure
+    - name: range-val-address
+    - name: unconditional-recursion
+    - name: unnecessary-stmt
+    - name: unreachable-code
+    - name: useless-break
+    - name: waitgroup-by-value
+    severity: error
+
+  rowserrcheck: 
+    packages: []
+
+  staticcheck: 
+    checks:
+    - '*'
+
+  stylecheck: 
+    checks:
+    - '*'
+    - -ST1000
+    http-status-code-whitelist: []
+    initialisms:
+    - ACL
+    - API
+    - ASCII
+    - CPU
+    - CSS
+    - DNS
+    - EOF
+    - GUID
+    - HTML
+    - HTTP
+    - HTTPS
+    - ID
+    - IP
+    - JSON
+    - QPS
+    - RAM
+    - RPC
+    - SLA
+    - SMTP
+    - SQL
+    - SSH
+    - TCP
+    - TLS
+    - TTL
+    - UDP
+    - UI
+    - GID
+    - UID
+    - UUID
+    - URI
+    - URL
+    - UTF8
+    - VM
+    - XML
+    - XMPP
+    - XSRF
+    - XSS
+    - SIP
+    - RTP
+    - AMQP
+    - DB
+    - TS
+
+  tenv: 
+    all: false
+
+  thelper: 
+    benchmark:
+      begin: true
+      first: true
+      name: true
+    fuzz:
+      begin: false
+      first: false
+      name: false
+    tb:
+      begin: true
+      first: true
+      name: true
+    test:
+      begin: true
+      first: true
+      name: true
+
+  unparam: 
+    check-exported: false
+
+  usestdlibvars: 
+    constant-kind: true
+    crypto-hash: true
+    default-rpc-path: true
+    http-method: true
+    http-status-code: true
+    sql-isolation-level: true
+    time-layout: true
+    time-month: true
+    time-weekday: true
+    tls-signature-scheme: true
+
+  whitespace: 
+    multi-func: false
+    multi-if: false
+
+# Linters configuration
+linters:
+  # Disable all linters.
+  disable-all: true
+  # Enable specific linters.
+  enable:
+    - asasalint
+    - asciicheck
+    - bodyclose
+    - containedctx
+    - dupl
+    - dupword
+    - durationcheck
+    - errcheck
+    - errname
+    - errorlint
+    - execinquery
+    - exhaustive
+    - gocheckcompilerdirectives
+    - goconst
+    - gocritic
+    - godot
+    - gofmt
+    - goimports
+    - gomnd
+    - goprintffuncname
+    - gosec
+    - gosimple
+    - govet
+    - grouper
+    - ineffassign
+    - lll
+    - makezero
+    - nilerr
+    - nilnil
+    - nolintlint
+    - nosprintfhostport
+    - prealloc
+    - predeclared
+    - reassign
+    - revive
+    - rowserrcheck
+    - sqlclosecheck
+    - staticcheck
+    - stylecheck
+    - tenv
+    - testableexamples
+    - thelper
+    - tparallel
+    - typecheck
+    - unconvert
+    - unparam
+    - unused
+    - usestdlibvars
+    - wastedassign
+    - whitespace
+    - wrapcheck
+  # Run only fast linters from enabled linters set (first run won't be fast).
+  fast: false
+
+# Issues configuration 
+issues:
+  exclude: []
+  exclude-case-sensitive: false
+  exclude-rules:
+  fix: false
+  max-issues-per-linter: 0
+  max-same-issues: 0
+
+  # Invariable parameters #
+
+  # Show only new issues: if there are unstaged changes or untracked files,
+  # only those changes are analyzed, else only changes in HEAD~ are analyzed.
+  new: false
+  # Independently of option `exclude` we use default exclude patterns,
+  # it can be disabled by this option.
+  # To list all excluded by default patterns execute `golangci-lint run --help`.
+  exclude-use-default: false
+
+  # Disabled parameters  #
+
+  # Show only new issues created after git revision `REV`.
+  # new-from-rev:
+
+  # Show only new issues created in git patch with set file path.
+  # new-from-patch:
+
+severity:
+  # Invariable parameters #
+
+  # Set the default severity for issues.
+  # If severity rules are defined and the issues do not match or no severity is provided to the rule
+  # this will be the default severity applied. This option does not affect the exit code of the linter.
+  default-severity: error
+  # If set to true `severity-rules` regular expressions become case-sensitive.
+  case-sensitive: false
+  # When a list of severity rules are provided, severity information will be added to lint issues.
+  # Severity rules have the same filtering capability as exclude rules
+  # except you are allowed to specify one matcher per severity rule.
+  # Only affects out formats that support setting severity information.
+  rules: []
