@@ -1,5 +1,3 @@
----
-# Source: pangoptic/templates/golangci-base.yml.tpl
 # Options for analysis running.
 run:
   # Settable parameters #
