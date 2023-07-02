@@ -93,7 +93,7 @@ linters-settings:
 
   goconst: 
     ignore-calls: false
-    ignore-tests: false
+    ignore-tests: true
     match-constant: true
     min-len: 1
     min-occurrences: 2
@@ -422,6 +422,8 @@ issues:
   exclude: []
   exclude-case-sensitive: false
   exclude-rules:
+  - path: "_test\\.go"
+    text: "fieldalignment: struct with \\d+ pointer bytes could be \\d+"
   fix: false
   max-issues-per-linter: 0
   max-same-issues: 0
