@@ -71,7 +71,7 @@ linters-settings:
     check-blank: false
     check-type-assertions: true
     disable-default-exclusions: false
-    exclude-functions: null
+    exclude-functions: []
 
   errorlint: 
     asserts: true
