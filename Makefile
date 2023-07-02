@@ -13,7 +13,7 @@ _golangci-lint-run: _golangci-lint-reports-mkdir
     -w /app \
     golangci/golangci-lint:v1.53.3 \
         golangci-lint run \
-            -c .golangci-lint.yml \
+            -c .golangci.yml \
 	> ./golangci-lint/report-unformatted.json
 
 .PHONY: _golangci-lint-format-report

@@ -17,9 +17,9 @@ mkdir -p golangci-lint
 
 Для запуска `golangci-lint` мы воспользуемся:
 - официальным docker-образом инструмента
-- файлом конфигурации `.golangci-lint.yml` (лежит в корне этого проекта)
+- файлом конфигурации `.golangci.yml` (лежит в корне этого проекта)
 
-Скопируйте `.golangci-lint.yml` в корень вашего проекта и запустите `golangci-lint` при помощи команды:
+Скопируйте `.golangci.yml` в корень вашего проекта и запустите `golangci-lint` при помощи команды:
 
 ```bash
 docker run --rm \
@@ -28,7 +28,7 @@ docker run --rm \
     -w /app \
     golangci/golangci-lint:v1.53.3 \
         golangci-lint run \
-            -c .golangci-lint.yml \
+            -c .golangci.yml \
         > ./golangci-lint/report-unformatted.json
 ```
 
