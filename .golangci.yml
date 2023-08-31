@@ -95,7 +95,7 @@ linters-settings:
     ignore-calls: false
     ignore-tests: true
     match-constant: true
-    min-len: 1
+    min-len: 3
     min-occurrences: 2
     numbers: false
 
