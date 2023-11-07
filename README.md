@@ -72,4 +72,4 @@ make golangci-lint-clean
 
 # Настройка GitHub Actions
 
-TBD
+Скопируйте содержимое `workflows/golangci-lint.yml` в `.github/workflows/` вашего репозитория.
