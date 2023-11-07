@@ -2,6 +2,12 @@
 
 Если вы работаете на Windows, то рекомендую вам начать использовать WSL (https://learn.microsoft.com/en-us/windows/wsl/install).
 
+# Зависимости
+
+Перед началом работы убедитесь, что у вас установлены локально:
+- Docker: https://docs.docker.com/get-docker/
+- jq: https://jqlang.github.io/jq/download/
+
 # Локальный запуск
 
 Создайте в директории проекта папку `golangci-lint` и добавьте ее в `.gitignore`:
@@ -59,6 +65,10 @@ make golangci-lint-run
 ```bash
 make golangci-lint-clean
 ```
+
+# Git pre-commit hook
+
+Код для добавления линтинга в pre-commit hook находится в `golangci-lint-pre-commit.sh`.
 
 # Настройка GitHub Actions
 

@@ -11,7 +11,7 @@ _golangci-lint-run: _golangci-lint-reports-mkdir
     -v $(shell pwd):/app \
     -v $(shell pwd)/golangci-lint/cache:/root/.cache \
     -w /app \
-    golangci/golangci-lint:v1.53.3 \
+    golangci/golangci-lint:v1.55.2 \
         golangci-lint run \
             -c .golangci.yml \
 	> ./golangci-lint/report-unformatted.json
