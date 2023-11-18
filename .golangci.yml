@@ -1,5 +1,6 @@
 # Options for analysis running.
 run:
+  go: "1.21"
   # Settable parameters #
   timeout: 5m
   tests: true
@@ -40,7 +41,6 @@ run:
   # Default: use Go version from the go.mod file, fallback on the env var `GOVERSION`, fallback on 1.18
   # go:
 
-
 # Output configuration options
 output:
   format: json
@@ -57,32 +57,31 @@ output:
 
 # Linters settings configuration
 linters-settings:
-
-  asasalint: 
+  asasalint:
     ignore-test: false
 
-  dupl: 
+  dupl:
     threshold: 100
 
-  dupword: 
+  dupword:
     keywords: []
 
-  errcheck: 
+  errcheck:
     check-blank: false
     check-type-assertions: true
     disable-default-exclusions: false
     exclude-functions: []
 
-  errorlint: 
+  errorlint:
     asserts: true
     comparison: true
     errorf: true
     errorf-multi: true
 
-  exhaustive: 
+  exhaustive:
     check:
-    - switch
-    - map
+      - switch
+      - map
     check-generated: false
     default-signifies-exhaustive: true
     explicit-exhaustive-map: false
@@ -91,7 +90,7 @@ linters-settings:
     ignore-enum-types: ""
     package-scope-only: false
 
-  goconst: 
+  goconst:
     ignore-calls: false
     ignore-tests: true
     match-constant: true
@@ -99,99 +98,99 @@ linters-settings:
     min-occurrences: 2
     numbers: false
 
-  gocritic: 
+  gocritic:
     enabled-checks:
-    - appendAssign
-    - appendCombine
-    - argOrder
-    - assignOp
-    - badCall
-    - badCond
-    - captLocal
-    - caseOrder
-    - commentFormatting
-    - defaultCaseOrder
-    - deprecatedComment
-    - dupArg
-    - dupBranchBody
-    - dupCase
-    - dupSubExpr
-    - elseif
-    - exitAfterDefer
-    - flagDeref
-    - flagName
-    - ifElseChain
-    - indexAlloc
-    - mapKey
-    - newDeref
-    - offBy1
-    - rangeExprCopy
-    - rangeValCopy
-    - regexpMust
-    - singleCaseSwitch
-    - sloppyLen
-    - stringXbytes
-    - switchTrue
-    - typeSwitchVar
-    - underef
-    - unlambda
-    - unslice
-    - valSwap
-    - wrapperFunc
+      - appendAssign
+      - appendCombine
+      - argOrder
+      - assignOp
+      - badCall
+      - badCond
+      - captLocal
+      - caseOrder
+      - commentFormatting
+      - defaultCaseOrder
+      - deprecatedComment
+      - dupArg
+      - dupBranchBody
+      - dupCase
+      - dupSubExpr
+      - elseif
+      - exitAfterDefer
+      - flagDeref
+      - flagName
+      - ifElseChain
+      - indexAlloc
+      - mapKey
+      - newDeref
+      - offBy1
+      - rangeExprCopy
+      - rangeValCopy
+      - regexpMust
+      - singleCaseSwitch
+      - sloppyLen
+      - stringXbytes
+      - switchTrue
+      - typeSwitchVar
+      - underef
+      - unlambda
+      - unslice
+      - valSwap
+      - wrapperFunc
 
-  godot: 
+  godot:
     capital: true
     exclude: []
     period: true
     scope: toplevel
 
-  gofmt: 
+  gofmt:
     simplify: false
 
-  goimports: 
+  goimports:
     local-prefixes: github.com/org/project
 
-  gomnd: 
+  gomnd:
     checks:
-    - argument
-    - case
-    - condition
-    - operation
-    - return
-    - assign
+      - argument
+      - case
+      - condition
+      - operation
+      - return
+      - assign
     ignored-files: []
     ignored-functions: []
     ignored-numbers: []
 
-  gosec: 
+  gosec:
     includes:
-    - G104
-    - G109
-    - G110
-    - G201
-    - G202
-    - G203
-    - G301
-    - G302
-    - G303
-    - G305
-    - G306
-    - G307
-    - G402
-    - G403
+      - G104
+      - G109
+      - G110
+      - G201
+      - G202
+      - G203
+      - G301
+      - G302
+      - G303
+      - G305
+      - G306
+      - G307
+      - G402
+      - G403
 
-  gosimple: 
+  gosimple:
     checks:
-    - '*'
-    - -SA1014
-    - -SA1028
+      - "*"
+      - -SA1014
+      - -SA1028
 
-  govet: 
+  govet:
     disable:
-    - shadow
+      - shadow
     enable-all: true
 
-  grouper: 
+  grouper:
     const-require-grouping: false
     const-require-single-const: false
     import-require-grouping: false
@@ -201,126 +200,126 @@ linters-settings:
     var-require-grouping: false
     var-require-single-var: false
 
-  lll: 
+  lll:
     line-length: 120
     tab-width: 1
 
-  makezero: 
+  makezero:
     always: false
 
-  nilnil: 
+  nilnil:
     checked-types:
-    - ptr
-    - func
-    - iface
-    - map
-    - chan
+      - ptr
+      - func
+      - iface
+      - map
+      - chan
 
-  nolintlint: 
+  nolintlint:
     allow-no-explanation: []
     allow-unused: false
     require-explanation: true
     require-specific: false
 
-  prealloc: 
+  prealloc:
     for-loops: false
     range-loops: true
     simple: true
 
-  predeclared: 
+  predeclared:
     ignore: ""
     q: false
 
-  reassign: 
+  reassign:
     patterns:
-    - .*
+      - .*
 
-  revive: 
+  revive:
     confidence: 0.8
     enable-all-rules: false
     ignore-generated-header: true
     rules:
-    - name: atomic
-    - arguments:
-      - allowTypesBefore: '*testing.T'
-      name: context-as-argument
-    - name: context-keys-type
-    - arguments:
-      - - recover
-        - return
-      name: defer
-    - name: dot-imports
-    - name: identical-branches
-    - name: increment-decrement
-    - name: range-val-in-closure
-    - name: range-val-address
-    - name: unconditional-recursion
-    - name: unnecessary-stmt
-    - name: unreachable-code
-    - name: useless-break
-    - name: waitgroup-by-value
+      - name: atomic
+      - arguments:
+          - allowTypesBefore: "*testing.T"
+        name: context-as-argument
+      - name: context-keys-type
+      - arguments:
+          - - recover
+            - return
+        name: defer
+      - name: dot-imports
+      - name: identical-branches
+      - name: increment-decrement
+      - name: range-val-in-closure
+      - name: range-val-address
+      - name: unconditional-recursion
+      - name: unnecessary-stmt
+      - name: unreachable-code
+      - name: useless-break
+      - name: waitgroup-by-value
     severity: error
 
-  rowserrcheck: 
+  rowserrcheck:
     packages: []
 
-  staticcheck: 
+  staticcheck:
     checks:
-    - '*'
+      - "*"
 
-  stylecheck: 
+  stylecheck:
     checks:
-    - '*'
-    - -ST1000
+      - "*"
+      - -ST1000
     http-status-code-whitelist: []
     initialisms:
-    - ACL
-    - API
-    - ASCII
-    - CPU
-    - CSS
-    - DNS
-    - EOF
-    - GUID
-    - HTML
-    - HTTP
-    - HTTPS
-    - ID
-    - IP
-    - JSON
-    - QPS
-    - RAM
-    - RPC
-    - SLA
-    - SMTP
-    - SQL
-    - SSH
-    - TCP
-    - TLS
-    - TTL
-    - UDP
-    - UI
-    - GID
-    - UID
-    - UUID
-    - URI
-    - URL
-    - UTF8
-    - VM
-    - XML
-    - XMPP
-    - XSRF
-    - XSS
-    - SIP
-    - RTP
-    - AMQP
-    - DB
-    - TS
+      - ACL
+      - API
+      - ASCII
+      - CPU
+      - CSS
+      - DNS
+      - EOF
+      - GUID
+      - HTML
+      - HTTP
+      - HTTPS
+      - ID
+      - IP
+      - JSON
+      - QPS
+      - RAM
+      - RPC
+      - SLA
+      - SMTP
+      - SQL
+      - SSH
+      - TCP
+      - TLS
+      - TTL
+      - UDP
+      - UI
+      - GID
+      - UID
+      - UUID
+      - URI
+      - URL
+      - UTF8
+      - VM
+      - XML
+      - XMPP
+      - XSRF
+      - XSS
+      - SIP
+      - RTP
+      - AMQP
+      - DB
+      - TS
 
-  tenv: 
+  tenv:
     all: false
 
-  thelper: 
+  thelper:
     benchmark:
       begin: true
       first: true
@@ -338,10 +337,10 @@ linters-settings:
       first: true
       name: true
 
-  unparam: 
+  unparam:
     check-exported: false
 
-  usestdlibvars: 
+  usestdlibvars:
     constant-kind: true
     crypto-hash: true
     default-rpc-path: true
@@ -353,7 +352,7 @@ linters-settings:
     time-weekday: true
     tls-signature-scheme: true
 
-  whitespace: 
+  whitespace:
     multi-func: false
     multi-if: false
 
@@ -417,13 +416,13 @@ linters:
   # Run only fast linters from enabled linters set (first run won't be fast).
   fast: false
 
-# Issues configuration 
+# Issues configuration
 issues:
   exclude: []
   exclude-case-sensitive: false
   exclude-rules:
-  - path: "_test\\.go"
-    text: "fieldalignment: struct with \\d+ pointer bytes could be \\d+"
+    - path: "_test\\.go"
+      text: "fieldalignment: struct with \\d+ pointer bytes could be \\d+"
   fix: false
   max-issues-per-linter: 0
   max-same-issues: 0
