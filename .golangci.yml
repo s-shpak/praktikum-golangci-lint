@@ -148,7 +148,7 @@ linters-settings:
     simplify: false
 
   goimports:
-    local-prefixes: github.com/org/project
+    local-prefixes: ""
 
   gomnd:
     checks:
