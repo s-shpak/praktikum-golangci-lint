@@ -30,9 +30,9 @@ mkdir -p golangci-lint
 ```bash
 docker run --rm \
     -v $(pwd):/app \
-    -v $(pwd)/golangci-lint/.cache/golangci-lint/v1.53.3:/root/.cache \
+    -v $(pwd)/golangci-lint/.cache/golangci-lint/v1.57.2:/root/.cache \
     -w /app \
-    golangci/golangci-lint:v1.53.3 \
+    golangci/golangci-lint:v1.57.2 \
         golangci-lint run \
             -c .golangci.yml \
         > ./golangci-lint/report-unformatted.json

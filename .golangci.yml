@@ -1,16 +1,10 @@
 # Options for analysis running.
 run:
-  go: "1.21"
+  go: "1.22"
   # Settable parameters #
   timeout: 5m
   tests: true
   build-tags: []
-  # Which dirs to skip: issues from them won't be reported.
-  skip-dirs:
-    - "bin"
-    - "scripts"
-    - ".ci"
-    - ".gradle"
   # Which files to skip: they will be analyzed, but issues from them won't be reported.
   skip-files: []
 
@@ -18,9 +12,6 @@ run:
 
   # Exit code when at least one issue was found.
   issues-exit-code: 1
-  # Enables skipping of directories:
-  # - vendor$, third_party$, testdata$, examples$, Godeps$, builtin$
-  skip-dirs-use-default: false
   # If set we pass it to "go list -mod={option}". From "go help modules":
   # If invoked with -mod=readonly, the go command is disallowed from the implicit
   # automatic updating of go.mod described above. Instead, it fails when any changes
@@ -43,7 +34,8 @@ run:
 
 # Output configuration options
 output:
-  format: json
+  formats:
+    - format: json
   # Print lines of code with issue.
   print-issued-lines: true
   # Print linter name in the end of issue text.
@@ -100,43 +92,90 @@ linters-settings:
 
   gocritic:
     enabled-checks:
-      - appendAssign
+      # - appendAssign
       - appendCombine
-      - argOrder
-      - assignOp
-      - badCall
-      - badCond
-      - captLocal
-      - caseOrder
-      - commentFormatting
-      - defaultCaseOrder
-      - deprecatedComment
-      - dupArg
-      - dupBranchBody
-      - dupCase
-      - dupSubExpr
-      - elseif
-      - exitAfterDefer
-      - flagDeref
-      - flagName
-      - ifElseChain
+      # - argOrder
+      # - assignOp
+      # - badCall
+      # - badCond
+      - badLock
+      - badSorting
+      - boolExprSimplify
+      - builtinShadow
+      - builtinShadowDecl
+      # - captLocal
+      # - caseOrder
+      # - codegenComment
+      # - commentFormatting
+      - commentedOutImport
+      # - defaultCaseOrder
+      - deferInLoop
+      - deferUnlambda
+      # - deprecatedComment
+      # - dupArg
+      # - dupBranchBody
+      # - dupCase
+      # - dupImport
+      # - dupSubExpr
+      - dynamicFmtString
+      # - elseif
+      - emptyDecl
+      - emptyFallthrough
+      - equalFold
+      - evalOrder
+      # - exitAfterDefer
+      - exposedSyncMutex
+      - externalErrorReassign
+      - filepathJoin
+      # - flagDeref
+      # - flagName
+      - hexLiteral
+      - httpNoBody
+      - hugeParam
+      # - ifElseChain
+      - importShadow
       - indexAlloc
-      - mapKey
-      - newDeref
-      - offBy1
+      - initClause
+      # - mapKey
+      # - newDeref
+      - nilValReturn
+      - octalLiteral
+      # - offBy1
+      - preferDecodeRune
+      - preferFilepathJoin
+      - preferFprint
+      - preferStringWriter
+      - preferWriteByte
+      - ptrToRefParam
       - rangeExprCopy
       - rangeValCopy
-      - regexpMust
-      - singleCaseSwitch
-      - sloppyLen
+      - redundantSprint
+      # - regexpMust
+      - returnAfterHttpError
+      # - singleCaseSwitch
+      - sliceClear
+      # - sloppyLen
+      - sloppyReassign
+      # - sloppyTypeAssert
+      - sprintfQuotedString
+      - stringConcatSimplify
       - stringXbytes
-      - switchTrue
-      - typeSwitchVar
-      - underef
-      - unlambda
-      - unslice
-      - valSwap
-      - wrapperFunc
+      # - switchTrue
+      - timeExprSimplify
+      - todoCommentWithoutDetail
+      - typeAssertChain
+      # - typeSwitchVar
+      - typeUnparen
+      - uncheckedInlineErr
+      # - underef
+      - unlabelStmt
+      # - unlambda
+      # - unslice
+      # - valSwap
+      - weakCond
+      - whyNoLint
+      # - wrapperFunc
+      - yodaStyleExpr
 
   godot:
     capital: true
@@ -204,8 +243,31 @@ linters-settings:
     line-length: 120
     tab-width: 1
 
+  loggercheck:
+    loggercheck:
+    # Allow check for the github.com/go-kit/log library.
+    kitlog: true
+    # Allow check for the k8s.io/klog/v2 library.
+    klog: true
+    # Allow check for the github.com/go-logr/logr library.
+    logr: true
+    # Allow check for the "sugar logger" from go.uber.org/zap library.
+    zap: true
+    # Require all logging keys to be inlined constant strings.
+    require-string-key: false
+    # Require printf-like format specifier (%s, %d for example) not present.
+    no-printf-like: false
+    # List of custom rules to check against, where each rule is a single logger pattern, useful for wrapped loggers.
+    # For example: https://github.com/timonwong/loggercheck/blob/7395ab86595781e33f7afba27ad7b55e6956ebcd/testdata/custom-rules.txt
+    rules: []
+
   makezero:
     always: false
+
+  musttag:
+    # A set of custom functions to check in addition to the builtin ones.
+    # Default: json, xml, gopkg.in/yaml.v3, BurntSushi/toml, mitchellh/mapstructure, jmoiron/sqlx
+    functions: []
 
   nilnil:
     checked-types:
@@ -221,6 +283,18 @@ linters-settings:
     require-explanation: true
     require-specific: false
 
+  perfsprint:
+    # Optimizes even if it requires an int or uint type cast.
+    int-conversion: true
+    # Optimizes into `err.Error()` even if it is only equivalent for non-nil errors.
+    err-error: true
+    # Optimizes `fmt.Errorf`.
+    errorf: true
+    # Optimizes `fmt.Sprintf` with only one argument.
+    sprintf1: true
+    # Optimizes into strings concatenation.
+    strconcat: true
+
   prealloc:
     for-loops: false
     range-loops: true
@@ -229,6 +303,19 @@ linters-settings:
   predeclared:
     ignore: ""
     q: false
+
+  protogetter:
+    # Skip files generated by specified generators from the checking.
+    # Checks only the file's initial comment, which must follow the format: "// Code generated by <generator-name>".
+    # Files generated by protoc-gen-go, protoc-gen-go-grpc, and protoc-gen-grpc-gateway are always excluded automatically.
+    skip-generated-by: []
+    # Skip files matching the specified glob pattern from the checking.
+    skip-files: []
+    # Skip any generated files from the checking.
+    skip-any-generated: true
+    # Skip first argument of append function.
+    # Default: false
+    replace-first-arg-in-append: false
 
   reassign:
     patterns:
@@ -262,6 +349,32 @@ linters-settings:
 
   rowserrcheck:
     packages: []
+
+  sloglint:
+    # Enforce not mixing key-value pairs and attributes.
+    no-mixed-args: true
+    # Enforce using key-value pairs only (overrides no-mixed-args, incompatible with attr-only).
+    kv-only: false
+    # Enforce using attributes only (overrides no-mixed-args, incompatible with kv-only).
+    attr-only: false
+    # Enforce not using global loggers.
+    # Values:
+    # - "": disabled
+    # - "all": report all global loggers
+    # - "default": report only the default slog logger
+    no-global: "all"
+    # Enforce using methods that accept a context.
+    context-only: true
+    # Enforce using static values for log messages.
+    static-msg: false
+    # Enforce using constants instead of raw keys.
+    no-raw-keys: false
+    # Enforce a single key naming convention.
+    # Values: snake, kebab, camel, pascal
+    # Default: ""
+    key-naming-case: ""
+    # Enforce putting arguments on separate lines.
+    args-on-sep-lines: false
 
   staticcheck:
     checks:
@@ -364,6 +477,7 @@ linters:
   enable:
     - asasalint
     - asciicheck
+    - bidichk
     - bodyclose
     - containedctx
     - dupl
@@ -374,6 +488,7 @@ linters:
     - errorlint
     - execinquery
     - exhaustive
+    - forcetypeassert
     - gocheckcompilerdirectives
     - goconst
     - gocritic
@@ -387,17 +502,24 @@ linters:
     - govet
     - grouper
     - ineffassign
+    - intrange
     - lll
+    - loggercheck
     - makezero
+    - mirror
+    - musttag
     - nilerr
     - nilnil
     - nolintlint
     - nosprintfhostport
+    - perfsprint
     - prealloc
     - predeclared
+    - protogetter
     - reassign
     - revive
     - rowserrcheck
+    - sloglint
     - sqlclosecheck
     - staticcheck
     - stylecheck
@@ -413,12 +535,26 @@ linters:
     - wastedassign
     - whitespace
     - wrapcheck
+    - zerologlint
   # Run only fast linters from enabled linters set (first run won't be fast).
   fast: false
 
 # Issues configuration
 issues:
   exclude: []
+  # Which dirs to exclude: issues from them won't be reported.
+  # Can use regexp here: `generated.*`, regexp is applied on full path,
+  # including the path prefix if one is set.
+  # Default dirs are skipped independently of this option's value (see exclude-dirs-use-default).
+  # "/" will be replaced by current OS file path separator to properly work on Windows.
+  exclude-dirs:
+    - "bin"
+    - "scripts"
+    - ".ci"
+    - ".gradle"
+  # Enables exclude of directories:
+  # - vendor$, third_party$, testdata$, examples$, Godeps$, builtin$
+  exclude-dirs-use-default: false
   exclude-case-sensitive: false
   exclude-rules:
     - path: "_test\\.go"
