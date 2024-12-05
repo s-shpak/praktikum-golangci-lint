@@ -189,18 +189,6 @@ linters-settings:
   goimports:
     local-prefixes: ""
 
-  gomnd:
-    checks:
-      - argument
-      - case
-      - condition
-      - operation
-      - return
-      - assign
-    ignored-files: []
-    ignored-functions: []
-    ignored-numbers: []
-
   gosec:
     includes:
       - G104
@@ -244,7 +232,6 @@ linters-settings:
     tab-width: 1
 
   loggercheck:
-    loggercheck:
     # Allow check for the github.com/go-kit/log library.
     kitlog: true
     # Allow check for the k8s.io/klog/v2 library.
@@ -263,6 +250,18 @@ linters-settings:
 
   makezero:
     always: false
+
+  mnd:
+    checks:
+      - argument
+      - case
+      - condition
+      - operation
+      - return
+      - assign
+    ignored-files: []
+    ignored-functions: []
+    ignored-numbers: []
 
   musttag:
     # A set of custom functions to check in addition to the builtin ones.
@@ -364,7 +363,7 @@ linters-settings:
     # - "default": report only the default slog logger
     no-global: "all"
     # Enforce using methods that accept a context.
-    context-only: true
+    context: "all"
     # Enforce using static values for log messages.
     static-msg: false
     # Enforce using constants instead of raw keys.
@@ -486,7 +485,6 @@ linters:
     - errcheck
     - errname
     - errorlint
-    - execinquery
     - exhaustive
     - forcetypeassert
     - gocheckcompilerdirectives
@@ -495,7 +493,6 @@ linters:
     - godot
     - gofmt
     - goimports
-    - gomnd
     - goprintffuncname
     - gosec
     - gosimple
@@ -507,6 +504,7 @@ linters:
     - loggercheck
     - makezero
     - mirror
+    - mnd
     - musttag
     - nilerr
     - nilnil

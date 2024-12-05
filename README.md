@@ -1,4 +1,4 @@
-В этом файле вы найдет инструкции по настройке и запуску `golangci-lint` в вашем проекте. Инструкции протестированы на `Ubuntu 22.04`, на Linux и Mac они должны работать.
+В этом файле вы найдете инструкции по настройке и запуску `golangci-lint` в вашем проекте. Инструкции протестированы на `Ubuntu 22.04`, на Linux и Mac они должны работать.
 
 Если вы работаете на Windows, то рекомендую вам начать использовать WSL (https://learn.microsoft.com/en-us/windows/wsl/install).
 
@@ -72,4 +72,4 @@ make golangci-lint-clean
 
 # Настройка GitHub Actions
 
-Скопируйте содержимое `workflows/golangci-lint.yml` в `.github/workflows/`, а `.golangci-lint.yml` в корень вашего репозитория.
+Скопируйте содержимое `workflows/golangci-lint.yml` в `.github/workflows/`, а `.golangci.yml` в корень вашего репозитория.
